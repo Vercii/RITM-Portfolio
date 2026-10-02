@@ -1,3 +1,4 @@
+
 :root {
     --navy-950: #07111f;
     --navy-900: #0a1626;
@@ -32,10 +33,16 @@
     --docker: #2496ed;
     --compose: #8ed6fb;
 
-    --sql: #f29111;
+    --sql: #25b29f;
     --cloud: #7dd3fc;
     --appsmith: #b197fc;
-    --knack: #2dd4bf;
+    --knack: #8e2dd4;
+
+    --html: #e34f26;
+    --css: #264de4;
+    --typescript: #3178c6;
+    --firebase: #d65b22;
+
 }
 
 * {
@@ -358,23 +365,41 @@ h2 {
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    animation: exp-crossfade 12s infinite;
-}
-
-.exp-image {
     animation: exp-crossfade 18s infinite;
 }
 
-.exp-image-1 { animation-delay: 0s; }
-.exp-image-2 { animation-delay: 6s; }
-.exp-image-3 { animation-delay: 12s; }
+.exp-image-1 {
+    animation-delay: 0s;
+}
+
+.exp-image-2 {
+    animation-delay: 6s;
+}
+
+.exp-image-3 {
+    animation-delay: 12s;
+}
 
 @keyframes exp-crossfade {
-    0%      { opacity: 0; }
-    6%      { opacity: 1; }
-    33.33%  { opacity: 1; }
-    39.33%  { opacity: 0; }
-    100%    { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    6% {
+        opacity: 1;
+    }
+
+    33.33% {
+        opacity: 1;
+    }
+
+    39.33% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 .exp-item {
@@ -500,6 +525,16 @@ h3 {
 .cloud { color: var(--cloud); }
 .appsmith { color: var(--appsmith); }
 .knack { color: var(--knack); }
+
+/* CurrenSee technology colors */
+.html { color: var(--html); }
+.css { color: var(--css); }
+.typescript { color: var(--typescript); }
+
+.firebase {
+    color: var(--firebase);
+}
+
 
 .achievement {
     display: flex;
