@@ -10,6 +10,21 @@
 </head>
 
 <body>
+    <div class="intro-overlay" id="intro-overlay" aria-label="Welcome introduction" role="button" tabindex="0" aria-describedby="intro-prompt" hidden>
+        <div class="intro-fragments" id="intro-fragments" aria-hidden="true"></div>
+        <div class="intro-content">
+            <p class="intro-monogram">RITM</p>
+            <p class="intro-greeting">Nice to meet you, I'm Renzo.</p>
+            <p class="intro-tagline">I build useful things with technology.</p>
+            <div class="intro-specialties" aria-label="My specialties">
+                <span>Automation</span>
+                <span>Web &amp; Mobile Development</span>
+                <span>Cloud</span>
+            </div>
+            <p class="intro-prompt" id="intro-prompt">Tap or click anywhere to explore <span aria-hidden="true">↗</span></p>
+        </div>
+    </div>
+
     <header class="profile">
         <div class="cover">
             <!-- Local placeholder images. Replace these with your own cover images later. -->
@@ -27,6 +42,12 @@
             <div class="profile-name">
                 <p class="eyebrow">Cloud · Web/Mobile Development · AI · Automation</p>
                 <h1>Renzo Isaac<br>Takeda Mendoza</h1>
+                <a class="resume-button" href="assets/Renzo_Takeda_Mendoza_Resume.pdf" download>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 3.75v10.5m0 0 4-4m-4 4-4-4M4.75 16.5v2.75h14.5V16.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Download my resume
+                </a>
             </div>
         </div>
     </header>
@@ -287,5 +308,63 @@
     <footer class="container footer">
         <p>© 2026 Renzo Isaac Takeda Mendoza</p>
     </footer>
+    <script>
+        (() => {
+            const overlay = document.getElementById("intro-overlay");
+            const fragments = document.getElementById("intro-fragments");
+            if (!overlay || !fragments) return;
+
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const alreadyPlayed = sessionStorage.getItem("portfolio-intro-played") === "true";
+
+            if (reduceMotion || alreadyPlayed) return;
+
+            overlay.hidden = false;
+            document.body.classList.add("intro-playing");
+
+            const columns = window.innerWidth < 600 ? 7 : 11;
+            const rows = window.innerHeight < 600 ? 6 : 9;
+            const fragmentCount = columns * rows;
+
+            for (let i = 0; i < fragmentCount; i++) {
+                const piece = document.createElement("span");
+                piece.className = "intro-fragment";
+                const col = i % columns;
+                const row = Math.floor(i / columns);
+
+                piece.style.left = `${(col / columns) * 100}%`;
+                piece.style.top = `${(row / rows) * 100}%`;
+                piece.style.width = `${100 / columns + 0.2}%`;
+                piece.style.height = `${100 / rows + 0.2}%`;
+                piece.style.setProperty("--dx", `${(Math.random() - 0.5) * 180}px`);
+                piece.style.setProperty("--dy", `${100 + Math.random() * 260}px`);
+                piece.style.setProperty("--rot", `${(Math.random() - 0.5) * 100}deg`);
+                piece.style.setProperty("--delay", `${Math.random() * 0.32}s`);
+                fragments.appendChild(piece);
+            }
+
+            let dismissed = false;
+
+            const dismissIntro = () => {
+                if (dismissed) return;
+                dismissed = true;
+                overlay.classList.add("is-crumbling");
+                document.body.classList.remove("intro-playing");
+                sessionStorage.setItem("portfolio-intro-played", "true");
+
+                window.setTimeout(() => {
+                    overlay.remove();
+                }, 1600);
+            };
+
+            overlay.addEventListener("click", dismissIntro);
+            overlay.addEventListener("keydown", (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    dismissIntro();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

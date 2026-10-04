@@ -681,3 +681,213 @@ h3 {
         transition: none !important;
     }
 }
+
+
+/* ---------- Interactive intro / crumble reveal ---------- */
+
+.intro-overlay[hidden] {
+    display: none;
+}
+
+.intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding: 28px;
+    background: var(--navy-950);
+    isolation: isolate;
+    cursor: pointer;
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.intro-overlay:focus-visible {
+    outline: 2px solid var(--off-white);
+    outline-offset: -8px;
+}
+
+.intro-fragments {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.intro-fragment {
+    position: absolute;
+    display: block;
+    background: var(--navy-950);
+    border: 1px solid rgba(238, 234, 226, 0.025);
+    will-change: transform, opacity;
+}
+
+.intro-content {
+    position: relative;
+    z-index: 3;
+    width: min(100%, 760px);
+    pointer-events: none;
+    animation: intro-content-in 700ms cubic-bezier(.2,.75,.25,1) both;
+}
+
+.intro-monogram {
+    margin: 0 0 24px;
+    color: var(--off-white);
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.09em;
+    line-height: 1;
+}
+
+.intro-greeting {
+    margin: 0;
+    color: var(--off-white);
+    font-size: clamp(1.65rem, 4.8vw, 3.2rem);
+    font-weight: 650;
+    letter-spacing: -0.045em;
+    line-height: 1.15;
+}
+
+.intro-tagline {
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: clamp(0.95rem, 2vw, 1.08rem);
+}
+
+.intro-specialties {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 30px;
+}
+
+.intro-specialties span {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--off-white);
+    background: rgba(13, 27, 45, 0.62);
+    font-size: 0.8rem;
+    letter-spacing: 0.015em;
+    animation: intro-specialty-in 600ms both;
+}
+
+.intro-specialties span:nth-child(1) { animation-delay: 220ms; }
+.intro-specialties span:nth-child(2) { animation-delay: 360ms; }
+.intro-specialties span:nth-child(3) { animation-delay: 500ms; }
+
+.intro-prompt {
+    margin: 52px 0 0;
+    color: #7f8b9b;
+    font-size: 0.75rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    animation: intro-prompt-pulse 2s 1s ease-in-out infinite;
+}
+
+.intro-prompt span {
+    display: inline-block;
+    margin-left: 5px;
+    color: var(--off-white);
+    transition: transform 160ms ease;
+}
+
+.intro-overlay:hover .intro-prompt span {
+    transform: translate(3px, -3px);
+}
+
+.intro-overlay.is-crumbling .intro-content {
+    animation: intro-content-out 260ms ease forwards;
+}
+
+.intro-overlay.is-crumbling .intro-fragment {
+    animation: intro-fragment-fall 850ms var(--delay, 0s) cubic-bezier(.45,0,.9,.45) forwards;
+}
+
+@keyframes intro-content-in {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes intro-specialty-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes intro-prompt-pulse {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+}
+
+@keyframes intro-content-out {
+    to { opacity: 0; transform: translateY(-10px); }
+}
+
+@keyframes intro-fragment-fall {
+    to {
+        opacity: 0;
+        transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--rot));
+    }
+}
+
+/* ---------- Resume button ---------- */
+
+.resume-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: 1px solid var(--border-strong);
+    border-radius: 7px;
+    background: rgba(13, 27, 45, 0.78);
+    color: var(--off-white);
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.resume-button svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+}
+
+.resume-button:hover,
+.resume-button:focus-visible {
+    border-color: rgba(238, 234, 226, 0.45);
+    background: var(--navy-800);
+    transform: translateY(-1px);
+}
+
+.resume-button:focus-visible {
+    outline: 2px solid var(--off-white);
+    outline-offset: 3px;
+}
+
+body.intro-playing {
+    overflow: hidden;
+}
+
+@media (max-width: 700px) {
+    .resume-button {
+        margin-top: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro-content,
+    .intro-specialties span,
+    .intro-prompt,
+    .intro-fragment {
+        animation: none !important;
+    }
+
+    .resume-button {
+        transition: none;
+    }
+}
