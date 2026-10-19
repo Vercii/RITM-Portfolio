@@ -41,6 +41,7 @@
     --html: #e34f26;
     --css: #264de4;
     --typescript: #3178c6;
+    --python: #0f4752;
     --firebase: #d65b22;
 
 }
@@ -530,6 +531,8 @@ h3 {
 .html { color: var(--html); }
 .css { color: var(--css); }
 .typescript { color: var(--typescript); }
+.python { color: var(--python); }
+
 
 .firebase {
     color: var(--firebase);
